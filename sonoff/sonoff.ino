@@ -2538,6 +2538,7 @@ void setup(void)
 
   Serial.begin(baudrate);
   delay(10);
+  Serial.println("CitrusTec-START");
   Serial.println();
   seriallog_level = LOG_LEVEL_INFO;  // Allow specific serial messages until config loaded
 
