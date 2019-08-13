@@ -247,6 +247,8 @@ const char kSensorNames[] PROGMEM =
 
 // Supported hardware modules
 enum SupportedModules {
+  CT_1LED_1DS,
+  CT_LED_CWW,
   SONOFF_BASIC,
   SONOFF_RF,
   SONOFF_SV,
@@ -588,6 +590,8 @@ const uint8_t kGpioNiceList[] PROGMEM = {
 };
 
 const uint8_t kModuleNiceList[MAXMODULE] PROGMEM = {
+  CT_1LED_1DS,
+  CT_LED_CWW,
   SONOFF_BASIC,        // Sonoff Relay Devices
   SONOFF_RF,
   SONOFF_TH,
@@ -661,6 +665,46 @@ const uint8_t kModuleNiceList[MAXMODULE] PROGMEM = {
 
 // Default module settings
 const mytmplt kModules[MAXMODULE] PROGMEM = {
+  { "CT 1xLED 1xDS",      // CitrusTec LED Cold Warm White (ESP8266)
+     GPIO_PWM1_INV,    // GPIO00 Button
+     0,                // GPIO01 Serial RXD and Optional sensor
+     0,                // GPIO02 D4 Blue Led (0 = On, 1 = Off) on ESP-12F - Link and Power status
+     0,                // GPIO03 Serial TXD and Optional sensor
+     0,                // GPIO04 Optional sensor (PWM3 Green)
+     0,                // GPIO05 Optional sensor (PWM2 Red)
+                       // GPIO06 (SD_CLK   Flash)
+                       // GPIO07 (SD_DATA0 Flash QIO/DIO/DOUT)
+                       // GPIO08 (SD_DATA1 Flash QIO/DIO/DOUT)
+     0,                // GPIO09 (SD_DATA2 Flash QIO or ESP8285)
+     0,                // GPIO10 (SD_DATA3 Flash QIO or ESP8285)
+                       // GPIO11 (SD_CMD   Flash)
+     0,                // GPIO12 Cold light (PWM0 Cold)
+     GPIO_DSB,         // GPIO13 Blue Led (0 = On, 1 = Off) - Link and Power status
+     0,                // GPIO14 Warm light (PWM1 Warm)
+     0,                // GPIO15 Optional sensor (PWM4 Blue)
+     0,                // GPIO16
+     0                 // ADC0 Analog input
+  },
+  { "CT LED CWW",      // CitrusTec LED Cold Warm White (ESP8266)
+     GPIO_PWM1,        // GPIO00 Button
+     0,                // GPIO01 Serial RXD and Optional sensor
+     GPIO_LED1_INV,    // GPIO02 D4 Blue Led (0 = On, 1 = Off) on ESP-12F - Link and Power status
+     0,                // GPIO03 Serial TXD and Optional sensor
+     GPIO_PWM2,        // GPIO04 Optional sensor (PWM3 Green)
+     0,                // GPIO05 Optional sensor (PWM2 Red)
+                       // GPIO06 (SD_CLK   Flash)
+                       // GPIO07 (SD_DATA0 Flash QIO/DIO/DOUT)
+                       // GPIO08 (SD_DATA1 Flash QIO/DIO/DOUT)
+     0,                // GPIO09 (SD_DATA2 Flash QIO or ESP8285)
+     0,                // GPIO10 (SD_DATA3 Flash QIO or ESP8285)
+                       // GPIO11 (SD_CMD   Flash)
+     0,                // GPIO12 Cold light (PWM0 Cold)
+     0,                // GPIO13 Blue Led (0 = On, 1 = Off) - Link and Power status
+     0,                // GPIO14 Warm light (PWM1 Warm)
+     0,                // GPIO15 Optional sensor (PWM4 Blue)
+     0,                // GPIO16
+     0                 // ADC0 Analog input
+  },
   { "Sonoff Basic",    // Sonoff Basic (ESP8266)
      GPIO_KEY1,        // GPIO00 Button
      GPIO_USER,        // GPIO01 Serial RXD and Optional sensor

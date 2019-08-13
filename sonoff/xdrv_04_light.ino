@@ -53,6 +53,7 @@
  * 12            yes     no         no          Fire
  *
 \*********************************************************************************************/
+#include "globals.h"
 
 #define XDRV_04              4
 
@@ -1004,8 +1005,11 @@ void LightAnimate(void)
               cur_col[i] = 0xFC;   // Fix unwanted blinking and PWM watchdog errors for values close to pwm_range (H801, Arilux and BN-SZ01)
             }
             uint16_t curcol = cur_col[i] * (Settings.pwm_range / 255);
+            curcol = map(curcol, 8, 1008, 0, 1023);
 //            AddLog_P2(LOG_LEVEL_DEBUG, PSTR(D_LOG_APPLICATION "Cur_Col%d %d, CurCol %d"), i, cur_col[i], curcol);
-            analogWrite(pin[GPIO_PWM1 +i], bitRead(pwm_inverted, i) ? Settings.pwm_range - curcol : curcol);
+            PWM_VALUES_TAB[i][3] = 1;
+            PWM_VALUES_TAB[i][0] = pin[GPIO_PWM1 +i];
+            PWM_VALUES_TAB[i][1] = (bitRead(pwm_inverted, i) ? Settings.pwm_range - curcol : curcol);
           }
         }
       }
