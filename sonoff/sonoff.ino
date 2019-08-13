@@ -67,6 +67,7 @@
 
 // Structs
 #include "settings.h"
+#include "globals.h"
 
 enum TasmotaCommands {
   CMND_BACKLOG, CMND_DELAY, CMND_POWER, CMND_FANSPEED, CMND_STATUS, CMND_STATE, CMND_POWERONSTATE, CMND_PULSETIME,
@@ -102,6 +103,7 @@ unsigned long feature_sns1;                 // Compiled sensor feature map
 unsigned long feature_sns2;                 // Compiled sensor feature map
 unsigned long serial_polling_window = 0;    // Serial polling window
 unsigned long state_second = 0;             // State second timer
+unsigned long state_1msecond = 0;           // State 50msecond timer
 unsigned long state_50msecond = 0;          // State 50msecond timer
 unsigned long state_100msecond = 0;         // State 100msecond timer
 unsigned long state_250msecond = 0;         // State 250msecond timer
@@ -2529,8 +2531,38 @@ extern "C" {
 extern struct rst_info resetInfo;
 }
 
+void ProcessPWMs()
+{
+  for (uint8_t i = 0; i < 5; i++)
+  {
+    if (PWM_VALUES_TAB[i][3] == 0) continue;
+
+    if (PWM_VALUES_TAB[i][1] > PWM_VALUES_TAB[i][2])
+    {
+      analogWrite(PWM_VALUES_TAB[i][0], ++PWM_VALUES_TAB[i][2]);
+    }
+    else if (PWM_VALUES_TAB[i][1] < PWM_VALUES_TAB[i][2])
+    {
+      analogWrite(PWM_VALUES_TAB[i][0], --PWM_VALUES_TAB[i][2]);
+    }
+  }
+  // timer0_write(ESP.getCycleCount() + TIMER_PERIOD_NODEMCU);
+}
+
+void PwmValuesInit()
+{
+  for (uint8_t i = 0; i < 5; ++i)
+  {
+    PWM_VALUES_TAB[i][0] = 0;
+    PWM_VALUES_TAB[i][1] = 0;
+    PWM_VALUES_TAB[i][2] = 0;
+    PWM_VALUES_TAB[i][3] = 0;
+  }
+}
+
 void setup(void)
 {
+  PwmValuesInit();
   RtcRebootLoad();
   if (!RtcRebootValid()) { RtcReboot.fast_reboot_count = 0; }
   RtcReboot.fast_reboot_count++;
@@ -2691,6 +2723,10 @@ void loop(void)
   SwitchLoop();
   RotaryLoop();
 
+  if (TimeReached(state_1msecond)) {
+    SetNextTimeInterval(state_1msecond, 1);
+    ProcessPWMs();
+  }
   if (TimeReached(state_50msecond)) {
     SetNextTimeInterval(state_50msecond, 50);
     XdrvCall(FUNC_EVERY_50_MSECOND);
