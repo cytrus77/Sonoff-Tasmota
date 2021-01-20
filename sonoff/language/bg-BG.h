@@ -28,7 +28,7 @@
  * Use online command StateText to translate ON, OFF, HOLD and TOGGLE.
  * Use online command Prefix to translate cmnd, stat and tele.
  *
- * Updated until v6.4.1.18
+ * Updated until v6.5.0.8
 \*********************************************************************/
 
 //#define LANGUAGE_MODULE_NAME         // Enable to display "Module Generic" (ie Spanish), Disable to display "Generic Module" (ie English)
@@ -93,6 +93,7 @@
 #define D_FALLBACK_TOPIC "Помощен топик"
 #define D_FALSE "Невярно"
 #define D_FILE "Файл"
+#define D_FLOW_RATE "Дебит"
 #define D_FREE_MEMORY "Свободна памет"
 #define D_FREQUENCY "Честота"
 #define D_GAS "Газ"
@@ -156,6 +157,7 @@
 #define D_TO "към"
 #define D_TOGGLE "Превключване"
 #define D_TOPIC "Топик"
+#define D_TOTAL_USAGE "Използвана вода"
 #define D_TRANSMIT "Предаване"
 #define D_TRUE "Вярно"
 #define D_TVOC "TVOC"
@@ -220,7 +222,7 @@
 
 // xdrv_02_webserver.ino
 #define D_NOSCRIPT "Разрешете JavaScript, за да използвате Tasmota"
-#define D_MINIMAL_FIRMWARE_PLEASE_UPGRADE "Минимален фърмуеър<br/>моля надградете го"
+#define D_MINIMAL_FIRMWARE_PLEASE_UPGRADE "Минимален фърмуер<br>моля надградете го"
 #define D_WEBSERVER_ACTIVE_ON "Уеб сървърът е активен на"
 #define D_WITH_IP_ADDRESS "с IP адрес"
 #define D_WEBSERVER_STOPPED "Уеб сървърът е спрян"
@@ -236,16 +238,16 @@
 #define D_BUTTON_TOGGLE "Превключване"
 #define D_CONFIGURATION "Конфигурация"
 #define D_INFORMATION "Информация"
-#define D_FIRMWARE_UPGRADE "Обновяване на фърмуеъра"
+#define D_FIRMWARE_UPGRADE "Обновяване на фърмуера"
 #define D_CONSOLE "Конзола"
-#define D_CONFIRM_RESTART "Подтвърдете рестартирането"
+#define D_CONFIRM_RESTART "Потвърдете рестартирането"
 
 #define D_CONFIGURE_MODULE "Конфигурация на модула"
 #define D_CONFIGURE_WIFI "Конфигурация на WiFi"
 #define D_CONFIGURE_MQTT "Конфигурация на MQTT"
 #define D_CONFIGURE_DOMOTICZ "Конфигурация на Domoticz"
 #define D_CONFIGURE_LOGGING "Конфигурация на лога"
-#define D_CONFIGURE_OTHER "Драги конфигурации"
+#define D_CONFIGURE_OTHER "Други конфигурации"
 #define D_CONFIRM_RESET_CONFIGURATION "Потвърдете изчистването"
 #define D_RESET_CONFIGURATION "Изчистване на конфигурацията"
 #define D_BACKUP_CONFIGURATION "Запазване на конфигурацията"
@@ -255,6 +257,7 @@
 #define D_MODULE_PARAMETERS "Параметри на модула"
 #define D_MODULE_TYPE "Тип на модула"
 #define D_PULLUP_ENABLE "Без pull-up за бутон/ключ"
+#define D_ADC "ADC"
 #define D_GPIO "GPIO"
 #define D_SERIAL_IN "Сериен вход"
 #define D_SERIAL_OUT "Сериен изход"
@@ -281,7 +284,8 @@
 
 #define D_LOGGING_PARAMETERS "Параметри на лога"
 #define D_SERIAL_LOG_LEVEL "Степен на серийния лог"
-#define D_WEB_LOG_LEVEL "Степен на Уеб лога"
+#define D_MQTT_LOG_LEVEL "Mqtt log level"
+#define D_WEB_LOG_LEVEL "Степен на уеб лога"
 #define D_SYS_LOG_LEVEL "Степен на системния лог"
 #define D_MORE_DEBUG "Още дебъгване"
 #define D_SYSLOG_HOST "Хост на системния лог"
@@ -299,13 +303,11 @@
 #define D_SINGLE_DEVICE "Единично"
 #define D_MULTI_DEVICE "Мулти"
 
-#define D_CONFIGURE_TEMPLATE "Конфигуриране на модел"
-#define D_TEMPLATE_PARAMETERS "Параметри на модел"
+#define D_CONFIGURE_TEMPLATE "Конфигуриране на шаблон"
+#define D_TEMPLATE_PARAMETERS "Параметри на шаблона"
 #define D_TEMPLATE_NAME "Име"
 #define D_BASE_TYPE "Базиран на"
-#define D_TEMPLATE_FLAGS "Флагове"
-#define D_ALLOW_ADC0 "ADC0 вход"
-#define D_ALLOW_PULLUP "Потребителски избор на pull-up"
+#define D_TEMPLATE_FLAGS "Опции"
 
 #define D_SAVE_CONFIGURATION "Запазване на конфигурацията"
 #define D_CONFIGURATION_SAVED "Конфигурацията е запазена"
@@ -324,7 +326,7 @@
 #define D_MQTT_GROUP_TOPIC "MQTT групов топик"
 #define D_MQTT_FULL_TOPIC "MQTT пълен топик"
 #define D_MDNS_DISCOVERY "mDNS откриване"
-#define D_MDNS_ADVERTISE "mDNS транслация"
+#define D_MDNS_ADVERTISE "mDNS известяване"
 #define D_ESP_CHIP_ID "ID на ESP чипа"
 #define D_FLASH_CHIP_ID "ID на чипа на флаш паметта"
 #define D_FLASH_CHIP_SIZE "Размер на флаш паметта"
@@ -349,7 +351,7 @@
 #define D_UPLOAD_ERR_10 "Грешка при инициализация на RF чипа"
 #define D_UPLOAD_ERR_11 "Грешка при изтриване на RF чипа"
 #define D_UPLOAD_ERR_12 "Грешка при записване в RF чипа"
-#define D_UPLOAD_ERR_13 "Грешка при декодиране на RF фирмуера"
+#define D_UPLOAD_ERR_13 "Грешка при декодиране на RF фърмуера"
 #define D_UPLOAD_ERROR_CODE "Код на грешка при зареждането"
 
 #define D_ENTER_COMMAND "Въвеждане на команда"
@@ -359,7 +361,7 @@
 // xdrv_01_mqtt.ino
 #define D_FINGERPRINT "Проверка на TLS отпечатък..."
 #define D_TLS_CONNECT_FAILED_TO "Неуспешно TLS свързване към"
-#define D_RETRY_IN "Повторно след"
+#define D_RETRY_IN "Повтори след"
 #define D_VERIFIED "Проверен отпечтък"
 #define D_INSECURE "Нешифрована връзка, недействителен отпечатък"
 #define D_CONNECT_FAILED_TO "Грешка при свързването към"
@@ -368,7 +370,7 @@
 #define D_MULTICAST_DISABLED "Multicast е изключен"
 #define D_MULTICAST_REJOINED "Multicast е повторно съединен"
 #define D_MULTICAST_JOIN_FAILED "Multicast грешка при присъединяването"
-#define D_FAILED_TO_SEND_RESPONSE "Не се получи изпращането на отговор"
+#define D_FAILED_TO_SEND_RESPONSE "Неуспех при изпращането на отговор"
 
 #define D_WEMO "WeMo"
 #define D_WEMO_BASIC_EVENT "WeMo главно събитие"
@@ -399,6 +401,7 @@
   #define D_DOMOTICZ_VOLTAGE "Напрежение/PM2,5"
   #define D_DOMOTICZ_CURRENT "Ток/PM10"
   #define D_DOMOTICZ_AIRQUALITY "Качество на въздуха"
+  #define D_DOMOTICZ_P1_SMART_METER "P1SmartMeter"
 #define D_DOMOTICZ_UPDATE_TIMER "Период на опресняване"
 
 // xdrv_09_timers.ino
@@ -430,7 +433,7 @@
 #define D_KNX_COMMAND_READ "Четене"
 #define D_KNX_COMMAND_OTHER "Друго"
 #define D_SENT_TO "изпратен до"
-#define D_KNX_WARNING "Груповият адрес ( 0 / 0 / 0 ) е резервиран и не може да бъде използван."
+#define D_KNX_WARNING "Груповият адрес (0/0/0) е резервиран и не може да бъде използван."
 #define D_KNX_ENHANCEMENT "Подобрена комуникация"
 #define D_KNX_TX_SLOT "KNX TX"
 #define D_KNX_RX_SLOT "KNX RX"
@@ -439,6 +442,19 @@
 #define D_ENERGY_TODAY "Използвана енергия днес"
 #define D_ENERGY_YESTERDAY "Използвана енергия вчера"
 #define D_ENERGY_TOTAL "Използвана енергия общо"
+
+// xdrv_27_shutter.ino
+#define D_OPEN "Open"
+#define D_CLOSE "Close"
+#define D_DOMOTICZ_SHUTTER "Shutter"
+
+// xdrv_28_pcf8574.ino
+#define D_CONFIGURE_PCF8574 "Configure PCF8574"
+#define D_PCF8574_PARAMETERS "PCF8574 parameters"
+#define D_INVERT_PORTS "Invert Ports"
+#define D_DEVICE "Device"
+#define D_DEVICE_INPUT "Input"
+#define D_DEVICE_OUTPUT "Output"
 
 // xsns_05_ds18b20.ino
 #define D_SENSOR_BUSY "Датчикът DS18x20 е зает"
@@ -492,6 +508,9 @@
 #define D_TX20_SOUTH "Ю"
 #define D_TX20_WEST "З"
 
+//xsns_43_hre.ino
+#define D_LOG_HRE "HRE: "
+
 // sonoff_template.h - keep them as short as possible to be able to fit them in GUI drop down box
 #define D_SENSOR_NONE          "Няма"
 #define D_SENSOR_USER          "Потребит."
@@ -508,6 +527,7 @@
 #define D_SENSOR_BUTTON        "Бутон"      // Suffix "1"
 #define D_SENSOR_RELAY         "Реле"       // Suffix "1i"
 #define D_SENSOR_LED           "Led"        // Suffix "1i"
+#define D_SENSOR_LED_LINK      "LedLink"    // Suffix "i"
 #define D_SENSOR_PWM           "PWM"        // Suffix "1"
 #define D_SENSOR_COUNTER       "Брояч"      // Suffix "1"
 #define D_SENSOR_IRRECV        "IRrecv"
@@ -521,6 +541,9 @@
 #define D_SENSOR_SAIR_TX       "SAir Tx"
 #define D_SENSOR_SPI_CS        "SPI CS"
 #define D_SENSOR_SPI_DC        "SPI DC"
+#define D_SENSOR_SPI_MISO      "SPI MISO"
+#define D_SENSOR_SPI_MOSI      "SPI MOSI"
+#define D_SENSOR_SPI_CLK       "SPI CLK"
 #define D_SENSOR_BACKLIGHT     "Подсветка"
 #define D_SENSOR_PMS5003       "PMS5003"
 #define D_SENSOR_SDS0X1_RX     "SDS0X1 Rx"
@@ -573,15 +596,48 @@
 #define D_SENSOR_MY92X1_DI     "MY92x1 DI"
 #define D_SENSOR_MY92X1_DCKI   "MY92x1 DCKI"
 #define D_SENSOR_ARIRFRCV      "ALux IrRcv"
+#define D_SENSOR_ARIRFSEL      "ALux IrSel"
 #define D_SENSOR_TXD           "Serial Tx"
 #define D_SENSOR_RXD           "Serial Rx"
 #define D_SENSOR_ROTARY        "Rotary"     // Suffix "1A"
+#define D_SENSOR_HRE_CLOCK     "HRE Clock"
+#define D_SENSOR_HRE_DATA      "HRE Data"
+#define D_SENSOR_ADE7953_IRQ   "ADE7953 IRQ"
+#define D_SENSOR_BUZZER        "Buzzer"
+#define D_SENSOR_OLED_RESET    "OLED Reset"
+#define D_SENSOR_ZIGBEE_TXD    "Zigbee Tx"
+#define D_SENSOR_ZIGBEE_RXD    "Zigbee Rx"
+#define D_SENSOR_SOLAXX1_TX    "SolaxX1 Tx"
+#define D_SENSOR_SOLAXX1_RX    "SolaxX1 Rx"
+#define D_SENSOR_IBEACON_TX    "iBeacon TX"
+#define D_SENSOR_IBEACON_RX    "iBeacon RX"
+#define D_SENSOR_RDM6300_RX    "RDM6300 RX"
+#define D_SENSOR_CC1101_CS     "CC1101 CS"
+#define D_SENSOR_A4988_DIR     "A4988 DIR"
+#define D_SENSOR_A4988_STP     "A4988 STP"
+#define D_SENSOR_A4988_ENA     "A4988 ENA"
+#define D_SENSOR_A4988_MS1     "A4988 MS1"
+#define D_SENSOR_A4988_MS2     "A4988 MS2"
+#define D_SENSOR_A4988_MS3     "A4988 MS3"
+#define D_SENSOR_DDS2382_TX    "DDS238-2 Tx"
+#define D_SENSOR_DDS2382_RX    "DDS238-2 Rx"
+#define D_SENSOR_DDSU666_TX    "DDSU666 Tx"
+#define D_SENSOR_DDSU666_RX    "DDSU666 Rx"
+#define D_SENSOR_SM2135_CLK    "SM2135 Clk"
+#define D_SENSOR_SM2135_DAT    "SM2135 Dat"
+#define D_SENSOR_DEEPSLEEP     "DeepSleep"
+#define D_SENSOR_EXS_ENABLE    "EXS Enable"
+#define D_SENSOR_ARDUINO_TX    "Arduino TX"
+#define D_SENSOR_ARDUINO_RX    "Arduino RX"
+#define D_SENSOR_ARDUINO_RESET "Arduino RST"
 
 // Units
 #define D_UNIT_AMPERE "A"
 #define D_UNIT_CENTIMETER "cm"
 #define D_UNIT_HERTZ "Hz"
 #define D_UNIT_HOUR "h"
+#define D_UNIT_GALLONS "gal"
+#define D_UNIT_GALLONS_PER_MIN "gal/min"
 #define D_UNIT_KILOGRAM "kg"
 #define D_UNIT_INCREMENTS "inc"
 #define D_UNIT_KILOMETER_PER_HOUR "km/h"
@@ -643,5 +699,29 @@
 #define D_TOTAL_REACTIVE  "Общо реактивна мощност"
 #define D_UNIT_KWARH      "kVArh"
 #define D_UNIT_ANGLE      "°"
+
+//SOLAXX1
+#define D_PV1_VOLTAGE     "PV1 Voltage"
+#define D_PV1_CURRENT     "PV1 Current"
+#define D_PV1_POWER       "PV1 Power"
+#define D_PV2_VOLTAGE     "PV2 Voltage"
+#define D_PV2_CURRENT     "PV2 Current"
+#define D_PV2_POWER       "PV2 Power"
+#define D_SOLAR_POWER     "Solar Power"
+#define D_INVERTER_POWER  "Inverter Power"
+#define D_STATUS          "Status"
+#define D_WAITING         "Waiting"
+#define D_CHECKING        "Checking"
+#define D_WORKING         "Working"
+#define D_FAILURE         "Failure"
+#define D_SOLAX_ERROR_0   "No Error Code"
+#define D_SOLAX_ERROR_1   "Grid Lost Fault"
+#define D_SOLAX_ERROR_2   "Grid Voltage Fault"
+#define D_SOLAX_ERROR_3   "Grid Frequency Fault"
+#define D_SOLAX_ERROR_4   "Pv Voltage Fault"
+#define D_SOLAX_ERROR_5   "Isolation Fault"
+#define D_SOLAX_ERROR_6   "Over Temperature Fault"
+#define D_SOLAX_ERROR_7   "Fan Fault"
+#define D_SOLAX_ERROR_8   "Other Device Fault"
 
 #endif  // _LANGUAGE_BG_BG_H_

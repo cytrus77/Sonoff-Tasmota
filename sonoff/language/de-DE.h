@@ -28,7 +28,7 @@
  * Use online command StateText to translate ON, OFF, HOLD and TOGGLE.
  * Use online command Prefix to translate cmnd, stat and tele.
  *
- * Updated until v6.4.1.18
+ * Updated until v6.6.0.21
 \*********************************************************************/
 
 //#define LANGUAGE_MODULE_NAME         // Enable to display "Module Generic" (ie Spanish), Disable to display "Generic Module" (ie English)
@@ -54,7 +54,7 @@
 #define D_ADMIN "Admin"
 #define D_AIR_QUALITY "Luftqualität"
 #define D_AP "AP"                    // Access Point
-#define D_AS "wie"
+#define D_AS "als"
 #define D_AUTO "AUTO"
 #define D_BLINK "Blinken"
 #define D_BLINKOFF "BlinkenAus"
@@ -93,6 +93,7 @@
 #define D_FALLBACK_TOPIC "Fallback-Topic"
 #define D_FALSE "falsch"
 #define D_FILE "Datei"
+#define D_FLOW_RATE "Durchflussmenge"
 #define D_FREE_MEMORY "Freier Arbeitsspeicher"
 #define D_FREQUENCY "Frequenz"
 #define D_GAS "Gas"
@@ -156,6 +157,7 @@
 #define D_TO "zu"
 #define D_TOGGLE "An/Aus"
 #define D_TOPIC "topic"
+#define D_TOTAL_USAGE "Gesamtverbrauch"
 #define D_TRANSMIT "Übertragen"
 #define D_TRUE "wahr"
 #define D_TVOC "TVOC"
@@ -220,7 +222,7 @@
 
 // xdrv_02_webserver.ino
 #define D_NOSCRIPT "JavaScript aktivieren um Tasmota benutzen zu können"
-#define D_MINIMAL_FIRMWARE_PLEASE_UPGRADE "MINIMUM-Firmware<br/>bitte upgraden"
+#define D_MINIMAL_FIRMWARE_PLEASE_UPGRADE "MINIMUM-Firmware<br>bitte upgraden"
 #define D_WEBSERVER_ACTIVE_ON "Web-Server aktiv bei"
 #define D_WITH_IP_ADDRESS "mit IP-Adresse"
 #define D_WEBSERVER_STOPPED "Web-Server angehalten"
@@ -255,6 +257,7 @@
 #define D_MODULE_PARAMETERS "Geräte-Einstellungen"
 #define D_MODULE_TYPE "Gerätetyp"
 #define D_PULLUP_ENABLE "Kein Taster/Schalter Pull-up"
+#define D_ADC "ADC"
 #define D_GPIO "GPIO"
 #define D_SERIAL_IN "serieller Eingang [serial in]"
 #define D_SERIAL_OUT "serieller Ausgang [serial out]"
@@ -281,9 +284,10 @@
 
 #define D_LOGGING_PARAMETERS "Logging-Einstellungen"
 #define D_SERIAL_LOG_LEVEL "Seriell-Log Level"
+#define D_MQTT_LOG_LEVEL "Mqtt-Log Level"
 #define D_WEB_LOG_LEVEL "Web-Log Level"
 #define D_SYS_LOG_LEVEL "Sys-Log Level"
-#define D_MORE_DEBUG "More debug"
+#define D_MORE_DEBUG "Mehr Details"
 #define D_SYSLOG_HOST "Sys-Log Host"
 #define D_SYSLOG_PORT "Sys-Log Port"
 #define D_TELEMETRY_PERIOD "Telemetrieperiode"
@@ -304,8 +308,6 @@
 #define D_TEMPLATE_NAME "Name"
 #define D_BASE_TYPE "basiert auf"
 #define D_TEMPLATE_FLAGS "Options"
-#define D_ALLOW_ADC0 "ADC0 input"
-#define D_ALLOW_PULLUP "Nutzer pull-up Auswahl"
 
 #define D_SAVE_CONFIGURATION "Konfiguration speichern"
 #define D_CONFIGURATION_SAVED "Konfiguration gespeichert"
@@ -318,11 +320,11 @@
 #define D_MAC_ADDRESS "MAC-Adresse"
 #define D_MQTT_HOST "MQTT Host"
 #define D_MQTT_PORT "MQTT Port"
-#define D_MQTT_CLIENT "MQTT client"
-#define D_MQTT_USER "MQTT-Benutzer"
-#define D_MQTT_TOPIC "MQTT topic"
-#define D_MQTT_GROUP_TOPIC "MQTT group topic"
-#define D_MQTT_FULL_TOPIC "MQTT full topic"
+#define D_MQTT_CLIENT "MQTT Client"
+#define D_MQTT_USER "MQTT Benutzer"
+#define D_MQTT_TOPIC "MQTT Topic"
+#define D_MQTT_GROUP_TOPIC "MQTT Group Topic"
+#define D_MQTT_FULL_TOPIC "MQTT Full Topic"
 #define D_MDNS_DISCOVERY "mDNS-Ermittlung"
 #define D_MDNS_ADVERTISE "mDNS-Bekanntmachung"
 #define D_ESP_CHIP_ID "ESP Chip ID"
@@ -333,15 +335,15 @@
 #define D_UPGRADE_BY_WEBSERVER "Update über Web-Server"
 #define D_OTA_URL "OTA-URL"
 #define D_START_UPGRADE "Update starten"
-#define D_UPGRADE_BY_FILE_UPLOAD "Update-Datei hochladen"
+#define D_UPGRADE_BY_FILE_UPLOAD "Update Datei hochladen"
 #define D_UPLOAD_STARTED "Upload gestartet"
 #define D_UPGRADE_STARTED "Update gestartet"
 #define D_UPLOAD_DONE "Upload abgeschlossen"
-#define D_UPLOAD_ERR_1 "keine Datei ausgewählt"
-#define D_UPLOAD_ERR_2 "ungenügend Speicherplatz"
-#define D_UPLOAD_ERR_3 "magic byte ist nicht 0xE9"
-#define D_UPLOAD_ERR_4 "Flash-Größe des Programmes ist größer als der reale Flashspeicher"
-#define D_UPLOAD_ERR_5 "Upload-buffer-Vergleich weicht ab"
+#define D_UPLOAD_ERR_1 "Keine Datei ausgewählt"
+#define D_UPLOAD_ERR_2 "Ungenügend Speicherplatz"
+#define D_UPLOAD_ERR_3 "Magic Byte ist nicht 0xE9"
+#define D_UPLOAD_ERR_4 "Datei überschreitet vorhdn. Flashspeicher"
+#define D_UPLOAD_ERR_5 "Upload Buffer Vergleich weicht ab"
 #define D_UPLOAD_ERR_6 "Upload fehlgeschlagen. Aktiviere logging 3"
 #define D_UPLOAD_ERR_7 "Upload abgebrochen"
 #define D_UPLOAD_ERR_8 "Datei ungültig"
@@ -399,7 +401,8 @@
   #define D_DOMOTICZ_VOLTAGE "Voltage/PM2.5"
   #define D_DOMOTICZ_CURRENT "Current/PM10"
   #define D_DOMOTICZ_AIRQUALITY "AirQuality"
-  #define D_DOMOTICZ_UPDATE_TIMER "Update Zeitplan"
+  #define D_DOMOTICZ_P1_SMART_METER "P1SmartMeter"
+#define D_DOMOTICZ_UPDATE_TIMER "Update Zeitplan"
 
 // xdrv_09_timers.ino
 #define D_CONFIGURE_TIMER "Zeitplan konfigurieren"
@@ -430,7 +433,7 @@
 #define D_KNX_COMMAND_READ "Lesen"
 #define D_KNX_COMMAND_OTHER "Andere"
 #define D_SENT_TO "gesendet an"
-#define D_KNX_WARNING "Die Gruppenadresse ( 0 / 0 / 0 ) ist reserviert und kann nicht verwendet werden."
+#define D_KNX_WARNING "Die Gruppenadresse (0/0/0) ist reserviert und kann nicht verwendet werden."
 #define D_KNX_ENHANCEMENT "Erweiterte Kommunikation"
 #define D_KNX_TX_SLOT "KNX TX"
 #define D_KNX_RX_SLOT "KNX RX"
@@ -439,6 +442,19 @@
 #define D_ENERGY_TODAY "Energie heute"
 #define D_ENERGY_YESTERDAY "Energie gestern"
 #define D_ENERGY_TOTAL "Energie insgesamt"
+
+// xdrv_27_shutter.ino
+#define D_OPEN "Öffnen"
+#define D_CLOSE "Schliessen"
+#define D_DOMOTICZ_SHUTTER "Rollo"
+
+// xdrv_28_pcf8574.ino
+#define D_CONFIGURE_PCF8574 "Konfiguriere PCF8574"
+#define D_PCF8574_PARAMETERS "PCF8574 Parameter"
+#define D_INVERT_PORTS "Invertiere Ports"
+#define D_DEVICE "Gerät"
+#define D_DEVICE_INPUT "Eingang"
+#define D_DEVICE_OUTPUT "Ausgang"
 
 // xsns_05_ds18b20.ino
 #define D_SENSOR_BUSY "Sensor beschäftigt"
@@ -459,7 +475,7 @@
 // xsns_18_pms5003.ino
 #define D_STANDARD_CONCENTRATION "CF-1 PM"     // Standard Particle CF-1 Particle Matter
 #define D_ENVIRONMENTAL_CONCENTRATION "PM"     // Environmetal Particle Matter
-#define D_PARTICALS_BEYOND "Particals"
+#define D_PARTICALS_BEYOND "Partikel"
 
 // xsns_32_mpu6050.ino
 #define D_AX_AXIS "Beschl. X-Achse"
@@ -492,6 +508,9 @@
 #define D_TX20_SOUTH "S"
 #define D_TX20_WEST "W"
 
+//xsns_43_hre.ino
+#define D_LOG_HRE "HRE: "
+
 // sonoff_template.h - keep them as short as possible to be able to fit them in GUI drop down box
 #define D_SENSOR_NONE          "None"
 #define D_SENSOR_USER          "User"
@@ -508,6 +527,7 @@
 #define D_SENSOR_BUTTON        "Button"     // Suffix "1"
 #define D_SENSOR_RELAY         "Relay"      // Suffix "1i"
 #define D_SENSOR_LED           "Led"        // Suffix "1i"
+#define D_SENSOR_LED_LINK      "LedLink"    // Suffix "i"
 #define D_SENSOR_PWM           "PWM"        // Suffix "1"
 #define D_SENSOR_COUNTER       "Counter"    // Suffix "1"
 #define D_SENSOR_IRRECV        "IRrecv"
@@ -521,7 +541,10 @@
 #define D_SENSOR_SAIR_TX       "SAir Tx"
 #define D_SENSOR_SPI_CS        "SPI CS"
 #define D_SENSOR_SPI_DC        "SPI DC"
-#define D_SENSOR_BACKLIGHT     "BkLight"
+#define D_SENSOR_SPI_MISO      "SPI MISO"
+#define D_SENSOR_SPI_MOSI      "SPI MOSI"
+#define D_SENSOR_SPI_CLK       "SPI CLK"
+#define D_SENSOR_BACKLIGHT     "Backlight"
 #define D_SENSOR_PMS5003       "PMS5003"
 #define D_SENSOR_SDS0X1_RX     "SDS0X1 Rx"
 #define D_SENSOR_SDS0X1_TX     "SDS0X1 Tx"
@@ -573,19 +596,52 @@
 #define D_SENSOR_MY92X1_DI     "MY92x1 DI"
 #define D_SENSOR_MY92X1_DCKI   "MY92x1 DCKI"
 #define D_SENSOR_ARIRFRCV      "ALux IrRcv"
+#define D_SENSOR_ARIRFSEL      "ALux IrSel"
 #define D_SENSOR_TXD           "Serial Tx"
 #define D_SENSOR_RXD           "Serial Rx"
 #define D_SENSOR_ROTARY        "Rotary"     // Suffix "1A"
+#define D_SENSOR_HRE_CLOCK     "HRE Clock"
+#define D_SENSOR_HRE_DATA      "HRE Data"
+#define D_SENSOR_ADE7953_IRQ   "ADE7953 IRQ"
+#define D_SENSOR_BUZZER        "Buzzer"
+#define D_SENSOR_OLED_RESET    "OLED Reset"
+#define D_SENSOR_ZIGBEE_TXD    "Zigbee Tx"
+#define D_SENSOR_ZIGBEE_RXD    "Zigbee Rx"
+#define D_SENSOR_SOLAXX1_TX    "SolaxX1 Tx"
+#define D_SENSOR_SOLAXX1_RX    "SolaxX1 Rx"
+#define D_SENSOR_IBEACON_TX    "iBeacon TX"
+#define D_SENSOR_IBEACON_RX    "iBeacon RX"
+#define D_SENSOR_RDM6300_RX    "RDM6300 RX"
+#define D_SENSOR_CC1101_CS     "CC1101 CS"
+#define D_SENSOR_A4988_DIR     "A4988 DIR"
+#define D_SENSOR_A4988_STP     "A4988 STP"
+#define D_SENSOR_A4988_ENA     "A4988 ENA"
+#define D_SENSOR_A4988_MS1     "A4988 MS1"
+#define D_SENSOR_A4988_MS2     "A4988 MS2"
+#define D_SENSOR_A4988_MS3     "A4988 MS3"
+#define D_SENSOR_DDS2382_TX    "DDS238-2 Tx"
+#define D_SENSOR_DDS2382_RX    "DDS238-2 Rx"
+#define D_SENSOR_DDSU666_TX    "DDSU666 Tx"
+#define D_SENSOR_DDSU666_RX    "DDSU666 Rx"
+#define D_SENSOR_SM2135_CLK    "SM2135 Clk"
+#define D_SENSOR_SM2135_DAT    "SM2135 Dat"
+#define D_SENSOR_DEEPSLEEP     "DeepSleep"
+#define D_SENSOR_EXS_ENABLE    "EXS Enable"
+#define D_SENSOR_ARDUINO_TX    "Arduino TX"
+#define D_SENSOR_ARDUINO_RX    "Arduino RX"
+#define D_SENSOR_ARDUINO_RESET "Arduino RST"
 
 // Units
 #define D_UNIT_AMPERE "A"
 #define D_UNIT_CENTIMETER "cm"
 #define D_UNIT_HERTZ "Hz"
 #define D_UNIT_HOUR "h"
+#define D_UNIT_GALLONS "gal"
+#define D_UNIT_GALLONS_PER_MIN "g/m"
 #define D_UNIT_INCREMENTS "inc"
 #define D_UNIT_KILOGRAM "kg"
 #define D_UNIT_KILOMETER_PER_HOUR "km/h"
-#define D_UNIT_KILOOHM "kOhm"
+#define D_UNIT_KILOOHM "kΩ"
 #define D_UNIT_KILOWATTHOUR "kWh"
 #define D_UNIT_LUX "lx"
 #define D_UNIT_MICROGRAM_PER_CUBIC_METER "µg/m3"
@@ -643,5 +699,29 @@
 #define D_TOTAL_REACTIVE  "Total Blind"
 #define D_UNIT_KWARH      "kVArh"
 #define D_UNIT_ANGLE      "Grad"
+
+//SOLAXX1
+#define D_PV1_VOLTAGE     "PV1 Spannung"
+#define D_PV1_CURRENT     "PV1 Strom"
+#define D_PV1_POWER       "PV1 Leistung"
+#define D_PV2_VOLTAGE     "PV2 Spannung"
+#define D_PV2_CURRENT     "PV2 Strom"
+#define D_PV2_POWER       "PV2 Leistung"
+#define D_SOLAR_POWER     "solare Leistung"
+#define D_INVERTER_POWER  "Inverter Leistung"
+#define D_STATUS          "Status"
+#define D_WAITING         "warten"
+#define D_CHECKING        "prüfen"
+#define D_WORKING         "arbeitet"
+#define D_FAILURE         "Fehler"
+#define D_SOLAX_ERROR_0   "Kein Fehler Code"
+#define D_SOLAX_ERROR_1   "Fehler im Solarstromnetz"
+#define D_SOLAX_ERROR_2   "Spannungsfehler im Solarstromnetz"
+#define D_SOLAX_ERROR_3   "Frequenzfehler im Solarstromnetz"
+#define D_SOLAX_ERROR_4   "Pv Spannungsfehler"
+#define D_SOLAX_ERROR_5   "Isolationsfehler"
+#define D_SOLAX_ERROR_6   "Übertemperatur"
+#define D_SOLAX_ERROR_7   "Lüfterfehler"
+#define D_SOLAX_ERROR_8   "sonstiger Fehler"
 
 #endif  // _LANGUAGE_DE_DE_H_

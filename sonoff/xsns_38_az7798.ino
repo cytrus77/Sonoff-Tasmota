@@ -118,7 +118,10 @@
 #define CO2_HIGH                     1200    // Above this CO2 value show red light
 #endif
 
-#define AZ_READ_TIMEOUT              400     // Must be way less than 1000 but enough to read 9 bytes at 9600 bps
+#define AZ_READ_TIMEOUT              400     // Must be way less than 1000 but enough to read 25 bytes at 9600 bps
+
+#define AZ_CLOCK_UPDATE_INTERVAL (24UL * 60 * 60) // periodically update clock display (24 hours)
+#define AZ_EPOCH (946684800UL)               // 2000-01-01 00:00:00
 
 TasmotaSerial *AzSerial;
 
@@ -129,11 +132,14 @@ double az_temperature = 0;
 double az_humidity = 0;
 uint8_t az_received = 0;
 uint8_t az_state = 0;
+unsigned long az_clock_update = 10;         // timer for periodically updating clock display
 
 /*********************************************************************************************/
 
 void AzEverySecond(void)
 {
+  unsigned long start = millis();
+
   az_state++;
   if (5 == az_state) {                      // every 5 seconds
     az_state = 0;
@@ -143,7 +149,6 @@ void AzEverySecond(void)
     az_received = 0;
 
     uint8_t az_response[32];
-    unsigned long start = millis();
     uint8_t counter = 0;
     uint8_t i, j;
     uint8_t response_substr[16];
@@ -182,7 +187,7 @@ void AzEverySecond(void)
       return;
     }
     response_substr[j] = 0;                 // add null terminator
-    az_temperature = CharToDouble((char*)response_substr); // units (C or F) depends on meter setting
+    az_temperature = CharToFloat((char*)response_substr); // units (C or F) depends on meter setting
     if(az_response[i] == 'C') {             // meter transmits in degC
       az_temperature = ConvertTemp((float)az_temperature); // convert to degF, depending on settings
     } else {                                // meter transmits in degF
@@ -232,7 +237,26 @@ void AzEverySecond(void)
       return;
     }
     response_substr[j] = 0;                 // add null terminator
-    az_humidity = CharToDouble((char*)response_substr);
+    az_humidity = ConvertHumidity(CharToFloat((char*)response_substr));
+  }
+
+  // update the clock from network time
+  if ((az_clock_update == 0) && (LocalTime() > AZ_EPOCH)) {
+    char tmpString[16];
+    sprintf(tmpString, "C %d\r", (int)(LocalTime() - AZ_EPOCH));
+    AzSerial->write(tmpString);
+    // discard the response
+    do {
+      if (AzSerial->available() > 0) {
+        if(AzSerial->read() == 0x0d) { break; }
+      } else {
+        delay(5);
+      }
+    } while(((millis() - start) < AZ_READ_TIMEOUT));
+    az_clock_update = AZ_CLOCK_UPDATE_INTERVAL;
+    AddLog_P(LOG_LEVEL_DEBUG, PSTR(D_LOG_DEBUG "AZ7798 clock updated"));
+  } else {
+    az_clock_update--;
   }
 }
 
@@ -258,15 +282,15 @@ void AzShow(bool json)
   dtostrfd(az_humidity, Settings.flag2.humidity_resolution, humidity);
 
   if (json) {
-    snprintf_P(mqtt_data, sizeof(mqtt_data), PSTR("%s,\"%s\":{\"" D_JSON_CO2 "\":%d,\"" D_JSON_TEMPERATURE "\":%s,\"" D_JSON_HUMIDITY "\":%s}"), mqtt_data, ktype, az_co2, temperature, humidity);
+    ResponseAppend_P(PSTR(",\"%s\":{\"" D_JSON_CO2 "\":%d,\"" D_JSON_TEMPERATURE "\":%s,\"" D_JSON_HUMIDITY "\":%s}"), ktype, az_co2, temperature, humidity);
 #ifdef USE_DOMOTICZ
     if (0 == tele_period) DomoticzSensor(DZ_AIRQUALITY, az_co2);
 #endif  // USE_DOMOTICZ
 #ifdef USE_WEBSERVER
   } else {
-    snprintf_P(mqtt_data, sizeof(mqtt_data), HTTP_SNS_CO2, mqtt_data, ktype, az_co2);
-    snprintf_P(mqtt_data, sizeof(mqtt_data), HTTP_SNS_TEMP, mqtt_data, ktype, temperature, TempUnit());
-    snprintf_P(mqtt_data, sizeof(mqtt_data), HTTP_SNS_HUM, mqtt_data, ktype, humidity);
+    WSContentSend_PD(HTTP_SNS_CO2, ktype, az_co2);
+    WSContentSend_PD(HTTP_SNS_TEMP, ktype, temperature, TempUnit());
+    WSContentSend_PD(HTTP_SNS_HUM, ktype, humidity);
 #endif  // USE_WEBSERVER
   }
 }
@@ -291,7 +315,7 @@ bool Xsns38(uint8_t function)
         AzShow(1);
         break;
 #ifdef USE_WEBSERVER
-      case FUNC_WEB_APPEND:
+      case FUNC_WEB_SENSOR:
         AzShow(0);
         break;
 #endif  // USE_WEBSERVER
